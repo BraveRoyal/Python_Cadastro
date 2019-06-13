@@ -1,0 +1,125 @@
+def Cadastrar():
+    #função para cadastrar o aluno
+    RM = int(input("Informe seu RM: "))
+    v = True
+    while v == True:
+        v = False
+        for i in aluno:
+            if RM == i[0]:
+                print("Esse RM ja foi usado")
+                RM = int(input("Informe seu RM novamente: "))
+                v = True
+    Nome = input("Informe seu Nome: ")
+    Idade = int(input("Informe sua Idade: "))
+    Sexo = input("Informe seu Sexo: M/F: ")
+    Sexo = Sexo.upper()
+    #validar o sexo
+    while Sexo != "M" and Sexo != "F":
+        Sexo = input("Informe seu Sexo: M/F: ")
+        Sexo = Sexo.upper()
+    print("Informe sua turma: ")
+    print("A")
+    print("B")
+    Turma = input()
+    Turma = Turma.upper()
+    #validar a turma
+    while Turma != "A" and Turma != "B":
+        print("Informe sua turma: ")
+        print("A")
+        print("B")
+        Turma = input()
+        Turma = Turma.upper()
+    aluno.append([RM, Nome, Idade, Sexo, Turma])
+def Consultar():
+    #função para consultar
+    for l in aluno:
+        print("RM: ", l[0])
+    Consu = int(input("Informe o RM de quem quer ver: "))
+    v = True
+    while v == True:
+        for i in aluno:
+            if Consu == i[0]:
+                v = False
+        if v == True:
+            print("RM n existe")
+            Consu = int(input("Informe o RM de quem quer ver: "))
+    busca = 0
+    #ele vai procurar ate achar o rm, se errar o rm vai dar loop infinito
+    while Consu != aluno[busca][0]:
+        busca += 1
+    #mostra o aluno
+    print("RM: ", aluno[busca][0])
+    print("Nome: ", aluno[busca][1])
+    print("Idade: ", aluno[busca][2])
+    print("Sexo: ", aluno[busca][3])
+    print("Turma: ", aluno[busca][4])
+def Excluir():
+    #função identica a consulta, porem ele exclui no final   
+    for l in aluno:
+        print("RM: ", l[0])
+    exclu = int(input("Informe o RM de quem quer excluir: "))
+    v = True
+    while v == True:
+        for i in aluno:
+            if exclu == i[0]:
+                v = False
+        if v == True:
+            print("RM n existe")
+            exclu = int(input("Informe o RM de quem quer excluir novamente: "))
+    busca = 0
+    #procura
+    while exclu != aluno[busca][0]:
+        busca += 1
+    #deleta
+    del(aluno[busca])
+def Relatórios():
+    #mostra todos os alunos
+    for i in aluno:
+        print("RM: ", i[0])
+        print("Nome: ", i[1])
+        print("Idade: ", i[2])
+        print("Sexo: ", i[3])
+        print("Turma: ", i[4])
+        print("--"*30)
+    #função para fazer a media
+    media()
+def media():
+    qtd = [0,0,0,0]
+    tur = [[],[]]
+    #coloca todas as idades de cada curso em uma matriz
+    for i in aluno:
+        if i[4] == "A":
+            tur[0].append(i[2])
+        else:
+            tur[1].append(i[2])
+    #faz a soma
+    for i in range(0,2):
+        for l in tur[i]:
+            qtd[i] += l
+        #faz a divisão. detalhe, n da para dividir por zero
+        if qtd[i] != 0 and len(tur[i]) != 0:
+            qtd[i] = qtd[i] / len(tur[i])
+    #mostra a media
+    print("Media de idade na turma A: ", qtd[0])
+    print("Media de idade na turma B: ", qtd[1])
+        
+aluno = [[10, 'Jean', 15, 'M', 'B'], [11, 'Caio', 20, 'M', 'A'], [12, 'Amanda', 12, 'F', 'B'], [13, 'Julio', 50, 'M', 'B'], [14, 'Julia', 18, 'F', 'A']]    
+fim = "1"
+#para vc decidir quando para
+while fim == "1":
+    print("Escolha uma opção")
+    print("1 - Cadastrar")
+    print("2 - Consultar")
+    print("3 - Excluir")
+    print("4 - Relatórios")
+    opção = int(input())
+    #dependendo da escolha, ele faz a função de sua escolha
+    if opção == 1:
+        Cadastrar()
+    elif opção == 2:
+        Consultar()
+    elif opção == 3:
+        Excluir()
+    elif opção == 4:
+        Relatórios()
+    fim = input("Deseja continuar? 1 - sim  2 - nao: ")
